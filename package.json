@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "emulator4": "emulator -no-snapshot -avd Nexus_4_API_27",
-    "android": "react-native run-android"
+    "android": "react-native run-android",
+    "build-android-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd .."
   },
   "dependencies": {
     "@types/react-navigation": "^3.0.7",

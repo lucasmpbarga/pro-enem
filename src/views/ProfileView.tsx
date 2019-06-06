@@ -7,15 +7,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../store';
 import * as CredentialsActions from '../store/reducers/credentials/actions';
-import { Credentials } from '../store/reducers/credentials/types';
+import * as PersonActions from '../store/reducers/person/actions';
+import { Person } from '../store/reducers/person/types';
+
 
 
 interface StateProps {
-    credentials: Credentials,
+    credentialId: number,
+    person: Person,
+    loading: boolean,
+    error: boolean,
 }
 
 interface DispatchProps {
     authenticateClear(): void,
+    personRequest(personId: number): void,
 }
 
 interface OwnProps {
@@ -29,19 +35,37 @@ class ProfileView extends Component<Props> {
         header: null
     };
 
+    componentDidMount() {
+        this.props.personRequest(this.props.credentialId);
+    }
+
     logout = (): void => {
         this.props.authenticateClear();
         this.props.navigation.navigate('Login');
     }
 
     render() {
+        const { name } = this.props.person;
+        const { loading } = this.props;
         return (
             <Container>
                 <Header />
                 <Content contentContainerStyle={{ flex: 1 }}>
-                    <View style={{ flex: 8 }}>
-                        <Text>{this.props.credentials.name}</Text>
-                    </View>
+                    {
+                        loading &&
+                        <View style={{ flex: 8, alignItems: 'center' }}>
+                            <Text>Loading...</Text>
+                        </View>
+                    }
+                    {
+                        !loading &&
+                        <View style={{ flex: 8 }}>
+                            {
+                                name && !loading &&
+                                <Text>{name}</Text>
+                            }
+                        </View>
+                    }
                     <View style={styles.logoutContainer}>
                         <Button rounded danger
                             style={styles.logoutBtn}
@@ -71,13 +95,14 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: ApplicationState) => ({
-    credentials: state.credentials.data,
-    loading: state.credentials.loading,
-    error: state.credentials.error,
+    credentialId: state.credentials.data.id,
+    person: state.person.data,
+    loading: state.person.loading,
+    error: state.person.error,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-    return bindActionCreators(CredentialsActions, dispatch);
+    return bindActionCreators({ ...CredentialsActions, ...PersonActions }, dispatch);
 };
 
 
