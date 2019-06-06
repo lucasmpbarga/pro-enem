@@ -117,7 +117,7 @@ class LoginView extends Component<Props, State> {
                                 onChangeText={this.onPasswordChangeHandle}
                             />
                         </Item>
-                        <Button primary
+                        <Button rounded primary
                             style={styles.submit}
                             onPress={this.logIn}
                             disabled={!canSubmit}
