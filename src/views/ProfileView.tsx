@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface Props { }
 
-class Profile extends Component<Props> {
+class ProfileView extends Component<Props> {
+    static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = {
+        header: null
+    };
+
     render() {
         return (
             <View>
@@ -32,4 +36,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Profile;
+export default ProfileView;

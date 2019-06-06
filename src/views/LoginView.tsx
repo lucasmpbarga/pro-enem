@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { State } from 'react-native-gesture-handler';
+import { NavigationScreenConfig, NavigationScreenOptions, NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ILogin } from '../models/ILogin';
@@ -15,11 +17,16 @@ interface DispatchProps {
     authenticateRequest(data: ILogin): void,
 }
 
-interface OwnProps { }
+interface OwnProps {
+    navigation: NavigationScreenProp<State>;
+}
 
 type Props = StateProps & DispatchProps & OwnProps
 
-class Login extends Component<Props> {
+class LoginView extends Component<Props> {
+    static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = {
+        header: null
+    };
 
     componentDidMount() {
         console.log(this.props.credentials);
@@ -38,7 +45,7 @@ class Login extends Component<Props> {
         return (
             <View>
                 <Text>Login</Text>
-                <TouchableOpacity onPress={() => Alert.alert('Profile')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
                     <Text>Navigatie To Profile =></Text>
                     <Text>{credentials.name}</Text>
                 </TouchableOpacity>
@@ -74,4 +81,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(CredentialsActions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
