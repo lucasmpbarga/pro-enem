@@ -16,6 +16,8 @@ const reducer: Reducer<CredentialsState> = (state = INITIAL_STATE, action) => {
             return { ...state, loading: false, error: false, data: action.payload };
         case CredentialsTypes.AUTHENTICATE_FAILURE:
             return { ...state, loading: false, error: true, data: {} as Credentials };
+        case CredentialsTypes.AUTHENTICATE_CLEAR:
+            return INITIAL_STATE;
         default:
             return state
     }
