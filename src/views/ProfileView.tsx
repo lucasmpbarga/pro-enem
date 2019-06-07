@@ -1,8 +1,8 @@
 import { Button, Container, Content, Header } from 'native-base';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { State } from 'react-native-gesture-handler';
-import { NavigationScreenConfig, NavigationScreenOptions, NavigationScreenProp } from 'react-navigation';
+import { NavigationScreenConfig, NavigationScreenOptions, NavigationScreenProp, ScrollView } from 'react-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../store';
@@ -37,6 +37,7 @@ class ProfileView extends Component<Props> {
 
     componentDidMount() {
         this.props.personRequest(this.props.credentialId);
+        this.props.error && this.logout();
     }
 
     logout = (): void => {
@@ -45,7 +46,7 @@ class ProfileView extends Component<Props> {
     }
 
     render() {
-        const { name } = this.props.person;
+        const { imageProfile, name, email, subscriptions } = this.props.person;
         const { loading } = this.props;
         return (
             <Container>
@@ -62,7 +63,31 @@ class ProfileView extends Component<Props> {
                         <View style={{ flex: 8 }}>
                             {
                                 name && !loading &&
-                                <Text>{name}</Text>
+                                <View style={{ flex: 1 }}>
+                                    <View style={styles.personDataContainer}>
+                                        <View style={styles.personData}>
+                                            <View style={styles.personImageContainer}>
+                                                <Image source={{ uri: imageProfile }} style={styles.personImage} />
+                                            </View>
+                                            <View style={styles.personInfoContainer}>
+                                                <Text style={styles.personName}>{name}</Text>
+                                                <Text style={styles.personEmail}>{email}</Text>
+                                                <Text style={styles.listTile}>Lista de cursos assinados</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    <View style={styles.coursesListContainer}>
+                                        <ScrollView>
+                                            {
+                                                subscriptions.map(sub => {
+                                                    return (
+                                                        <Text style={styles.courseDescription}>{`${sub.id}: ${sub.description}`}</Text>
+                                                    );
+                                                })
+                                            }
+                                        </ScrollView>
+                                    </View>
+                                </View>
                             }
                         </View>
                     }
@@ -91,6 +116,51 @@ const styles = StyleSheet.create({
     logoutLabel: {
         color: 'white',
         marginHorizontal: 30,
+    },
+    personDataContainer: {
+        flex: 3,
+    },
+    personData: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    personImageContainer: {
+        flex: 4,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    personImage: {
+        width: 150,
+        height: 150,
+        resizeMode: 'contain',
+        borderRadius: 100,
+    },
+    personInfoContainer: {
+        flex: 6,
+        paddingVertical: 30,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    personName: {
+        fontSize: 25,
+        color: 'black',
+    },
+    personEmail: {
+        fontSize: 15,
+        color: 'black',
+    },
+    listTile: {
+        fontSize: 15,
+        color: 'black',
+    },
+    coursesListContainer: {
+        flex: 5,
+        alignItems: 'center',
+        paddingVertical: 15,
+    },
+    courseDescription: {
+        fontSize: 25,
+        color: 'black',
     },
 });
 

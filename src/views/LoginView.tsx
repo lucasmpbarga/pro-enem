@@ -101,7 +101,7 @@ class LoginView extends Component<Props, State> {
                 <Text style={styles.loginLabel}>ProENEM</Text>
                 <Content>
                     <Form>
-                        <Item fixedLabel>
+                        <Item floatingLabel>
                             <Label>E-mail:</Label>
                             <Input
                                 value={email}
@@ -109,7 +109,7 @@ class LoginView extends Component<Props, State> {
                                 style={validateEmail ? { color: 'black' } : { color: 'red' }}
                             />
                         </Item>
-                        <Item fixedLabel last>
+                        <Item floatingLabel>
                             <Label>Password:</Label>
                             <Input
                                 secureTextEntry={true}
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
         fontSize: 50,
         textAlign: 'center',
         margin: 10,
-        color: '#202072'
+        color: '#202072',
+        marginVertical: 30,
     },
     errorLabel: {
         fontSize: 20,
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     },
     submit: {
         alignSelf: 'center',
-        marginTop: 16,
+        marginTop: 30,
     }
 });
 
