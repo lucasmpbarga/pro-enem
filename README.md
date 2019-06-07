@@ -20,11 +20,11 @@
     <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     • Um botão para logout
 
-<br/><br/>
+<br/>
 
 <strong>Solução:</strong>
 
-<br/><br/>
+<br/>
 
 ![alt text](https://github.com/lucasmpbarga/pro-enem/blob/master/screens/Screenshot_login.png)
 ![alt text](https://github.com/lucasmpbarga/pro-enem/blob/master/screens/Screenshot_internal.png)
